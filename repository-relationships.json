@@ -1,58 +1,75 @@
 {
+  "schema_version": 2,
   "organization": "declarative-migrations-test",
   "production": {
-    "commit": "21eb846e356b2a5aff068b21e77903e6cca50452",
-    "repository": "declarative-migrations/declarative-postgres-migrate.rs"
+    "repository": "declarative-migrations/declarative-postgres-migrate.rs",
+    "commit": "21eb846e356b2a5aff068b21e77903e6cca50452"
   },
   "repositories": [
     {
-      "default_branch": "main",
-      "description": "Organization profile, security policy, repository relationships, and reusable declarative-migration certification workflow templates.",
       "name": ".github",
-      "visibility": "public"
+      "state": "active",
+      "coverage": "organization profile, security policy, and reusable workflow templates"
     },
     {
-      "default_branch": "main",
-      "description": "Repeated forward and destructive rollback certification against live PostgreSQL with schema convergence and data-preservation assertions.",
-      "name": "postgres-forward-rollback",
-      "visibility": "public"
+      "name": "postgres-rollback-e2e",
+      "state": "active",
+      "coverage": "PostgreSQL 16 and 17 forward migrations, gated rollback, destructive rollback, idempotency, convergence, and data preservation"
     },
     {
-      "default_branch": "main",
-      "description": "Repeated forward and destructive rollback certification against a live CockroachDB instance under Cockroach DDL semantics.",
-      "name": "cockroach-forward-rollback",
-      "visibility": "public"
+      "name": "cockroachdb-rollback-e2e",
+      "state": "active",
+      "coverage": "CockroachDB 25.2.4 forward migrations, gated rollback, destructive rollback, idempotency, convergence, and data preservation"
     },
     {
-      "default_branch": "main",
-      "description": "Portable-plan, catalog-signature, and cross-dialect refusal certification across PostgreSQL and CockroachDB.",
-      "name": "cross-engine-compatibility",
-      "visibility": "public"
+      "name": "cross-version-matrix-e2e",
+      "state": "scaffold",
+      "coverage": "reserved for broader database-version compatibility matrices"
     },
     {
-      "default_branch": "main",
-      "description": "Concurrent migrator stress certification, final convergence proof, idempotent replay, and actionable contender failure classification.",
-      "name": "concurrent-migrator-lock",
-      "visibility": "public"
+      "name": "concurrent-migration-e2e",
+      "state": "scaffold",
+      "coverage": "reserved for concurrent migrator and database-lock certification"
     },
     {
-      "default_branch": "main",
-      "description": "Fault-injection certification for partial DDL failure, residual drift reporting, operator repair, and eventual convergence on both engines.",
-      "name": "failure-injection-atomicity",
-      "visibility": "public"
+      "name": "failed-step-atomicity-e2e",
+      "state": "active",
+      "coverage": "late-step failure, residual drift, data preservation, repair, and eventual convergence on PostgreSQL and CockroachDB"
     },
     {
-      "default_branch": "main",
-      "description": "Unauthorized schema drift detection and fail-closed apply certification against live PostgreSQL and CockroachDB.",
-      "name": "schema-drift-detection",
-      "visibility": "public"
+      "name": "schema-drift-e2e",
+      "state": "active",
+      "coverage": "unauthorized table, column, and index drift; fail-closed exit codes; explicitly gated repair on PostgreSQL and CockroachDB"
     },
     {
-      "default_branch": "main",
-      "description": "CLI exit-code, flags-to-environment, JSON-plan, and guarded JSON-RPC/MCP adapter contract certification.",
-      "name": "cli-mcp-contract",
-      "visibility": "public"
+      "name": "idempotent-replay-e2e",
+      "state": "scaffold",
+      "coverage": "reserved for high-volume replay and no-op migration certification"
+    },
+    {
+      "name": "data-preservation-e2e",
+      "state": "scaffold",
+      "coverage": "reserved for larger data-preservation and backfill fixtures"
+    },
+    {
+      "name": "cli-install-e2e",
+      "state": "scaffold",
+      "coverage": "reserved for isolated CLI package and installation contracts"
+    },
+    {
+      "name": "homebrew-install-e2e",
+      "state": "scaffold",
+      "coverage": "reserved for Homebrew packaging and installation contracts"
+    },
+    {
+      "name": "fuzz-property-e2e",
+      "state": "scaffold",
+      "coverage": "reserved for generated-schema and SQL-splitter property testing"
+    },
+    {
+      "name": "mcp-contract-e2e",
+      "state": "scaffold",
+      "coverage": "reserved for guarded JSON-RPC and MCP adapter contracts"
     }
-  ],
-  "schema_version": 1
+  ]
 }
