@@ -1,15 +1,25 @@
 # Declarative Migrations Certification
 
-This organization independently certifies [`declarative-migrations/declarative-postgres-migrate.rs`](https://github.com/declarative-migrations/declarative-postgres-migrate.rs) against real PostgreSQL and CockroachDB instances. Production is pinned at `21eb846e356b2a5aff068b21e77903e6cca50452` until a reviewed dependency-update pull request advances the fleet.
+This organization independently certifies [`declarative-migrations/declarative-postgres-migrate.rs`](https://github.com/declarative-migrations/declarative-postgres-migrate.rs) against real PostgreSQL and CockroachDB instances. The live fleet is pinned to production commit `21eb846e356b2a5aff068b21e77903e6cca50452` until a reviewed dependency-update pull request advances it.
 
-## Repositories
+## Active certification lanes
 
-- [`postgres-forward-rollback`](https://github.com/declarative-migrations-test/postgres-forward-rollback) — Repeated forward and destructive rollback certification against live PostgreSQL with schema convergence and data-preservation assertions.
-- [`cockroach-forward-rollback`](https://github.com/declarative-migrations-test/cockroach-forward-rollback) — Repeated forward and destructive rollback certification against a live CockroachDB instance under Cockroach DDL semantics.
-- [`cross-engine-compatibility`](https://github.com/declarative-migrations-test/cross-engine-compatibility) — Portable-plan, catalog-signature, and cross-dialect refusal certification across PostgreSQL and CockroachDB.
-- [`concurrent-migrator-lock`](https://github.com/declarative-migrations-test/concurrent-migrator-lock) — Concurrent migrator stress certification, final convergence proof, idempotent replay, and actionable contender failure classification.
-- [`failure-injection-atomicity`](https://github.com/declarative-migrations-test/failure-injection-atomicity) — Fault-injection certification for partial DDL failure, residual drift reporting, operator repair, and eventual convergence on both engines.
-- [`schema-drift-detection`](https://github.com/declarative-migrations-test/schema-drift-detection) — Unauthorized schema drift detection and fail-closed apply certification against live PostgreSQL and CockroachDB.
-- [`cli-mcp-contract`](https://github.com/declarative-migrations-test/cli-mcp-contract) — CLI exit-code, flags-to-environment, JSON-plan, and guarded JSON-RPC/MCP adapter contract certification.
+- [`postgres-rollback-e2e`](https://github.com/declarative-migrations-test/postgres-rollback-e2e) — PostgreSQL 16 and 17: repeated forward migration, fail-closed gated rollback, explicit destructive rollback, idempotency, final convergence, and preserved rows.
+- [`cockroachdb-rollback-e2e`](https://github.com/declarative-migrations-test/cockroachdb-rollback-e2e) — CockroachDB 25.2.4: the same repeated forward/rollback and data-preservation contract under CockroachDB schema semantics.
+- [`failed-step-atomicity-e2e`](https://github.com/declarative-migrations-test/failed-step-atomicity-e2e) — Late-step failure injection, engine-specific catalog inspection, residual drift, operator repair, and eventual convergence on both engines.
+- [`schema-drift-e2e`](https://github.com/declarative-migrations-test/schema-drift-e2e) — Unauthorized table, column, and index drift; diff exit `2`; gated apply exit `3`; explicitly approved repair on both engines.
 
-The fleet covers repeated forward/rollback cycles, cross-engine portability, concurrent migrators, injected partial failures, unauthorized drift, CLI semantics, and a guarded JSON-RPC/MCP adapter contract.
+## Reserved scaffold lanes
+
+The following repositories exist but remain intentionally marked as scaffolds until a reviewed pull request adds executable assertions and a green live workflow:
+
+- [`cross-version-matrix-e2e`](https://github.com/declarative-migrations-test/cross-version-matrix-e2e)
+- [`concurrent-migration-e2e`](https://github.com/declarative-migrations-test/concurrent-migration-e2e)
+- [`idempotent-replay-e2e`](https://github.com/declarative-migrations-test/idempotent-replay-e2e)
+- [`data-preservation-e2e`](https://github.com/declarative-migrations-test/data-preservation-e2e)
+- [`cli-install-e2e`](https://github.com/declarative-migrations-test/cli-install-e2e)
+- [`homebrew-install-e2e`](https://github.com/declarative-migrations-test/homebrew-install-e2e)
+- [`fuzz-property-e2e`](https://github.com/declarative-migrations-test/fuzz-property-e2e)
+- [`mcp-contract-e2e`](https://github.com/declarative-migrations-test/mcp-contract-e2e)
+
+The organization profile never treats a README-only repository as tested coverage. A lane becomes active only after its repository-local pull request passes the relevant live contract.
