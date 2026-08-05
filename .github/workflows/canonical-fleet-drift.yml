@@ -1,0 +1,48 @@
+name: Canonical fleet drift contract
+
+on:
+  pull_request:
+    paths:
+      - 'docs/CANONICAL-FLEET-DRIFT.json'
+      - 'docs/CANONICAL-FLEET-DRIFT.md'
+      - '.github/workflows/canonical-fleet-drift.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out without persisted credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          show-progress: false
+      - name: Validate the machine-readable reconciliation
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('docs/CANONICAL-FLEET-DRIFT.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          assert data['schemaVersion'] == 1
+          assert data['testOrganization'] == 'declarative-migrations-test'
+          expected = data['expectedSpecializedRepositories'] + data['expectedGovernanceRepositories']
+          present = data['presentCanonicalRepositories']
+          missing = data['missingCanonicalRepositories']
+          assert len(present) + len(missing) == expected
+          assert len(present) == len(set(present))
+          assert len(missing) == len(set(missing))
+          assert not set(present) & set(missing)
+          assert '.github' in present
+          assert len(missing) == 7
+          assert data['policy']['preserveExtraRepositories'] is True
+          assert data['policy']['neverDeleteOrOverwriteIndependentWork'] is True
+          raw = path.read_text(encoding='utf-8').lower()
+          for marker in ('ghp_', 'github_pat_', 'authorization: bearer ', 'client_secret=', 'password='):
+              assert marker not in raw
+          PY
