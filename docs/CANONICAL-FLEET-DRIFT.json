@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-08-05",
+  "sourceOrganization": "declarative-migrations",
+  "testOrganization": "declarative-migrations-test",
+  "canonicalManifest": "zed-pkg-test/zed-pkg-e2e:bootstrap/test-org-fleet.json.gz",
+  "expectedSpecializedRepositories": 12,
+  "expectedGovernanceRepositories": 1,
+  "presentCanonicalRepositories": [
+    ".github",
+    "cli-plan-e2e",
+    "data-preservation-e2e",
+    "fuzz-property-e2e",
+    "homebrew-install-e2e",
+    "postgres-zero-downtime-e2e"
+  ],
+  "missingCanonicalRepositories": [
+    "cockroachdb-rollback-e2e",
+    "mysql-shadow-e2e",
+    "postgres-lock-contention-e2e",
+    "redshift-advisory-e2e",
+    "schema-change-online-e2e",
+    "snowflake-advisory-e2e",
+    "sqlite-migration-e2e"
+  ],
+  "policy": {
+    "preserveExtraRepositories": true,
+    "neverDeleteOrOverwriteIndependentWork": true,
+    "bootstrapThroughPullRequests": true,
+    "immutableProductionPins": true,
+    "pullRequestCredentials": false
+  }
+}
