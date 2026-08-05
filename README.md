@@ -1,2 +1,3 @@
-# .github
-Governance and reusable test workflow policy for declarative-migrations-test.
+# declarative-migrations-test organization defaults
+
+Organization profile and reusable certification contracts.

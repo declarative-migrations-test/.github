@@ -1,0 +1,58 @@
+{
+  "organization": "declarative-migrations-test",
+  "production": {
+    "commit": "21eb846e356b2a5aff068b21e77903e6cca50452",
+    "repository": "declarative-migrations/declarative-postgres-migrate.rs"
+  },
+  "repositories": [
+    {
+      "default_branch": "main",
+      "description": "Organization profile, security policy, repository relationships, and reusable declarative-migration certification workflow templates.",
+      "name": ".github",
+      "visibility": "public"
+    },
+    {
+      "default_branch": "main",
+      "description": "Repeated forward and destructive rollback certification against live PostgreSQL with schema convergence and data-preservation assertions.",
+      "name": "postgres-forward-rollback",
+      "visibility": "public"
+    },
+    {
+      "default_branch": "main",
+      "description": "Repeated forward and destructive rollback certification against a live CockroachDB instance under Cockroach DDL semantics.",
+      "name": "cockroach-forward-rollback",
+      "visibility": "public"
+    },
+    {
+      "default_branch": "main",
+      "description": "Portable-plan, catalog-signature, and cross-dialect refusal certification across PostgreSQL and CockroachDB.",
+      "name": "cross-engine-compatibility",
+      "visibility": "public"
+    },
+    {
+      "default_branch": "main",
+      "description": "Concurrent migrator stress certification, final convergence proof, idempotent replay, and actionable contender failure classification.",
+      "name": "concurrent-migrator-lock",
+      "visibility": "public"
+    },
+    {
+      "default_branch": "main",
+      "description": "Fault-injection certification for partial DDL failure, residual drift reporting, operator repair, and eventual convergence on both engines.",
+      "name": "failure-injection-atomicity",
+      "visibility": "public"
+    },
+    {
+      "default_branch": "main",
+      "description": "Unauthorized schema drift detection and fail-closed apply certification against live PostgreSQL and CockroachDB.",
+      "name": "schema-drift-detection",
+      "visibility": "public"
+    },
+    {
+      "default_branch": "main",
+      "description": "CLI exit-code, flags-to-environment, JSON-plan, and guarded JSON-RPC/MCP adapter contract certification.",
+      "name": "cli-mcp-contract",
+      "visibility": "public"
+    }
+  ],
+  "schema_version": 1
+}

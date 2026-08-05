@@ -1,0 +1,13 @@
+{
+  "name": "Declarative migration certification",
+  "description": "Validate repository contract and pinned production dependency.",
+  "iconName": "octicon database",
+  "categories": [
+    "Rust",
+    "continuous-integration",
+    "testing"
+  ],
+  "filePatterns": [
+    "bootstrap-manifest\\.json$"
+  ]
+}
