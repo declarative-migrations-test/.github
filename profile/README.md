@@ -27,3 +27,15 @@ Pull requests run deterministic harness checks. Emulators, desktop matrices, liv
 
 GitHub owns code and delivery evidence; Linear owns planning and dependencies. The linked organization Project provides the cross-repository execution view.
 <!-- org-project-routing:end -->
+
+
+<!-- ore-org-baseline:begin -->
+## Planning and governance
+
+- Canonical Linear project: https://linear.app/denman/project/githubcomdeclarative-migrations-test-7e6b5d911bd8
+- Organization defaults: https://github.com/declarative-migrations-test/.github
+- Canonical agent policy: https://github.com/declarative-migrations-test/.github/blob/main/agents.md
+- Security policy: https://github.com/declarative-migrations-test/.github/security/policy
+
+Repositories in this organization use semantic conflict resolution with 3–10 relevant prior commits when useful, full cross-repository context, pull-request delivery, and a hard automated-agent denylist for destructive or history-rewriting operations.
+<!-- ore-org-baseline:end -->
