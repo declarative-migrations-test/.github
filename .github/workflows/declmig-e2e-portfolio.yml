@@ -42,7 +42,7 @@ jobs:
       - name: Validate aggregate test portfolio
         run: python3 scripts/validate_declmig_portfolio.py
 
-      - name: Verify aggregate repositories remain explicit gaps until provisioned
+      - name: Verify aggregate repositories are recorded as provisioned
         run: |
           python3 - <<'PY'
           import json
@@ -51,6 +51,8 @@ jobs:
           drift = json.loads(Path('docs/CANONICAL-FLEET-DRIFT.json').read_text(encoding='utf-8'))
           portfolio = json.loads(Path('e2e/declmig-e2e.portfolio.json').read_text(encoding='utf-8'))
           aggregate = {item['fullName']: item for item in drift['aggregatePortfolioRepositories']}
-          assert aggregate[portfolio['aggregate_repository']]['present'] is False
-          assert aggregate[portfolio['production_aggregate_repository']]['present'] is False
+          for name in (portfolio['aggregate_repository'], portfolio['production_aggregate_repository']):
+              assert aggregate[name]['present'] is True
+              assert aggregate[name]['bootstrapStatus'] == 'draft-pull-request-open'
+              assert aggregate[name]['bootstrapPullRequest'].startswith(f'https://github.com/{name}/pull/')
           PY
