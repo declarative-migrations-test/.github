@@ -27,12 +27,16 @@
     {
       "fullName": "declarative-migrations/declmig-e2e",
       "role": "stable-promotion-orchestrator",
-      "present": false
+      "present": true,
+      "bootstrapStatus": "draft-pull-request-open",
+      "bootstrapPullRequest": "https://github.com/declarative-migrations/declmig-e2e/pull/1"
     },
     {
       "fullName": "declarative-migrations-test/declmig-e2e",
       "role": "candidate-and-destructive-fleet-orchestrator",
-      "present": false
+      "present": true,
+      "bootstrapStatus": "draft-pull-request-open",
+      "bootstrapPullRequest": "https://github.com/declarative-migrations-test/declmig-e2e/pull/1"
     }
   ],
   "policy": {
