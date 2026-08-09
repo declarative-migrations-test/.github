@@ -29,19 +29,19 @@ This reverses the stale 2026-08-05 finding: the seven repositories previously re
 
 Several older migration test repositories also exist. They are intentional historical or independently added coverage and must be preserved; they do not replace the current canonical profiles.
 
-## Aggregate portfolio gap
+## Aggregate portfolio status
 
-The specialized fleet is broad, but the two requested aggregate orchestration repositories do not yet exist:
+Both requested aggregate orchestration repositories were provisioned through a narrowly scoped factory workflow and initialized through draft pull requests:
 
-- `declarative-migrations-test/declmig-e2e`: candidate, destructive, failure-injection, concurrency, engine, and permission certification.
-- `declarative-migrations/declmig-e2e`: stable release-promotion orchestration consuming exact immutable evidence from the test organization.
+- `declarative-migrations-test/declmig-e2e`: candidate, destructive, failure-injection, concurrency, engine, and permission certification; bootstrap PR `declarative-migrations-test/declmig-e2e#1`.
+- `declarative-migrations/declmig-e2e`: stable release-promotion orchestration consuming exact immutable evidence from the test organization; bootstrap PR `declarative-migrations/declmig-e2e#1`.
 
-The aggregate repositories are portfolio overlays, not silent replacements for any specialized scenario repository. The central factory manifest must add the test-org aggregate explicitly before generated governance is treated as converged.
+The aggregate repositories are portfolio overlays, not silent replacements for any specialized scenario repository. The central compressed factory manifest still must add the test-org aggregate explicitly before deterministic generated governance is treated as converged.
 
-## Required provisioning behavior
+## Provisioning and promotion behavior
 
-Each missing or new aggregate repository must be initialized through a reviewable bootstrap branch and pull request. Available production dependencies must use immutable commit coordinates. Unavailable engines or credentials must remain explicit source/environment gates rather than being reported as passing tests.
+Each aggregate repository was initialized through a reviewable bootstrap branch and pull request. Production dependencies use immutable commit coordinates. GitHub Actions and the PostgreSQL service image are pinned by digest/SHA. Unavailable engines or credentials remain explicit source/environment gates rather than being reported as passing tests.
 
-Pull-request validation must remain credential-free. Database service credentials and expensive integration environments belong only in protected GitHub environments, scheduled jobs, or manual dispatches. Destructive targets are permitted only in the test organization and must use ephemeral or explicitly disposable infrastructure.
+Pull-request validation remains credential-free. Database service credentials and expensive integration environments belong only in protected GitHub environments, scheduled jobs, or manual dispatches. Destructive targets are permitted only in the test organization and must use ephemeral or explicitly disposable infrastructure.
 
 The machine-readable source for this finding is `docs/CANONICAL-FLEET-DRIFT.json`.
