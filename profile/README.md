@@ -27,3 +27,27 @@ Pull requests run deterministic harness checks. Emulators, desktop matrices, liv
 
 GitHub owns code and delivery evidence; Linear owns planning and dependencies. The linked organization Project provides the cross-repository execution view.
 <!-- org-project-routing:end -->
+
+
+<!-- ore-org-baseline:begin -->
+## Planning and governance
+
+- Canonical Linear project: https://linear.app/denman/project/githubcomdeclarative-migrations-test-7e6b5d911bd8
+- Organization defaults: https://github.com/declarative-migrations-test/.github
+- Canonical agent policy: https://github.com/declarative-migrations-test/.github/blob/main/agents.md
+- Security policy: https://github.com/declarative-migrations-test/.github/security/policy
+
+Repositories in this organization use semantic conflict resolution with 3–10 relevant prior commits when useful, full cross-repository context, pull-request delivery, and a hard automated-agent denylist for destructive or history-rewriting operations.
+<!-- ore-org-baseline:end -->
+
+<!-- BEGIN MANAGED REPOSITORY RELATIONSHIPS v1 -->
+## Repository relationship registry
+
+`declarative-migrations-test` declares repository roles, dependency edges, cross-organization capabilities, deployment ownership, and the git-submodule/Zed-package contract:
+
+- [Human-readable map](architecture/REPOSITORY_RELATIONSHIPS.md)
+- [Machine-readable manifest](architecture/repository-relationships.json)
+- [JSON Schema](architecture/repository-relationships.schema.json)
+
+The public registry withholds private repository names and edges.
+<!-- END MANAGED REPOSITORY RELATIONSHIPS v1 -->

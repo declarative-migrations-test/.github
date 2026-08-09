@@ -1,12 +1,39 @@
 name: Portfolio policy
-on: [pull_request, workflow_dispatch]
-permissions: {contents: read}
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: portfolio-policy-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   policy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out without persisted credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          show-progress: false
+
       - name: Reject common committed secret material
+        shell: bash
         run: |
           set -euo pipefail
-          ! grep -RInE 'ghp_[A-Za-z0-9]{20,}|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY|Authorization: Bearer [A-Za-z0-9._-]+' . --exclude-dir=.git
+          ! grep -RInE \
+            'gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|lin_api_[A-Za-z0-9]{20,}|cfat_[A-Za-z0-9_-]{20,}|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY|Authorization: Bearer [A-Za-z0-9._-]+' \
+            . \
+            --exclude-dir=.git
+
+      - name: Reject unsafe pull-request workflow primitives
+        shell: bash
+        run: |
+          set -euo pipefail
+          ! grep -RInE '^\s*pull_request_target\s*:' .github/workflows
+          ! grep -RInE '^\s*permissions\s*:\s*write-all\s*$' .github/workflows
