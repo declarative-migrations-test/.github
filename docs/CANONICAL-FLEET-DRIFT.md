@@ -31,17 +31,19 @@ Several older migration test repositories also exist. They are intentional histo
 
 ## Aggregate portfolio status
 
-Both requested aggregate orchestration repositories were provisioned through a narrowly scoped factory workflow and initialized through draft pull requests:
+Both requested aggregate orchestration repositories are provisioned, their bootstrap pull requests are merged, and post-merge `main` certification is green:
 
-- `declarative-migrations-test/declmig-e2e`: candidate, destructive, failure-injection, concurrency, engine, and permission certification; bootstrap PR `declarative-migrations-test/declmig-e2e#1`.
-- `declarative-migrations/declmig-e2e`: stable release-promotion orchestration consuming exact immutable evidence from the test organization; bootstrap PR `declarative-migrations/declmig-e2e#1`.
+- `declarative-migrations-test/declmig-e2e`: candidate, destructive, failure-injection, concurrency, engine, and permission certification; PR `#1`, merge `201779ef3af3f2516a01a8223ac1d02c073ca39c`, main run `31332843970`.
+- `declarative-migrations/declmig-e2e`: stable release-promotion orchestration; PR `#1`, merge `ac9a8c23c736a53885da21a53ed34545eb1a103f`, main run `31332941841`.
 
-The aggregate repositories are portfolio overlays, not silent replacements for any specialized scenario repository. The central compressed factory manifest still must add the test-org aggregate explicitly before deterministic generated governance is treated as converged.
+Both certified exact DPM source commit `39d1d9da93127145a0d5b4d3e65bb23638f84ca9` against digest-pinned PostgreSQL 17. Both produced the same exact DPM binary SHA-256: `5445759b9d243e2f34957ecb63589b3320a5741ed854d1848708efb4d0b114bc`.
 
-## Provisioning and promotion behavior
+The aggregate repositories are portfolio overlays, not replacements for specialized scenario repositories. The central compressed factory manifest still must add the test-org aggregate explicitly before deterministic generated governance is fully converged.
 
-Each aggregate repository was initialized through a reviewable bootstrap branch and pull request. Production dependencies use immutable commit coordinates. GitHub Actions and the PostgreSQL service image are pinned by digest/SHA. Unavailable engines or credentials remain explicit source/environment gates rather than being reported as passing tests.
+## Promotion behavior
 
-Pull-request validation remains credential-free. Database service credentials and expensive integration environments belong only in protected GitHub environments, scheduled jobs, or manual dispatches. Destructive targets are permitted only in the test organization and must use ephemeral or explicitly disposable infrastructure.
+Pull-request validation remains credential-free. GitHub Actions, the Rust toolchain, source commit, and PostgreSQL service image use immutable identities. Destructive targets are permitted only in the test organization and must be ephemeral or explicitly disposable.
+
+The initial PostgreSQL diff → verify → apply → catalog assertions → empty post-apply diff lane is complete. Cross-org evidence consumption, the broader engine/failure/concurrency matrix, permission-denial tests, Shared Auth handoff, `*-lib-core` parity, and immutable Zed package certification remain active work.
 
 The machine-readable source for this finding is `docs/CANONICAL-FLEET-DRIFT.json`.

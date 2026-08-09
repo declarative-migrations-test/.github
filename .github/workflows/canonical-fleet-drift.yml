@@ -52,12 +52,22 @@ jobs:
           aggregates = data['aggregatePortfolioRepositories']
           assert len(aggregates) == 2
           by_name = {item['fullName']: item for item in aggregates}
-          assert set(by_name) == {
+          expected_aggregates = {
               'declarative-migrations/declmig-e2e',
               'declarative-migrations-test/declmig-e2e',
           }
-          assert by_name['declarative-migrations/declmig-e2e']['present'] is False
-          assert by_name['declarative-migrations-test/declmig-e2e']['present'] is False
+          assert set(by_name) == expected_aggregates
+          for name in expected_aggregates:
+              item = by_name[name]
+              assert item['present'] is True
+              assert item['bootstrapStatus'] == 'merged-main-green'
+              assert item['bootstrapPullRequest'] == f'https://github.com/{name}/pull/1'
+              assert re.fullmatch(r'[0-9a-f]{40}', item['mergeCommit'])
+              assert isinstance(item['mainWorkflowRun'], int) and item['mainWorkflowRun'] > 0
+              assert item['sourceCommit'] == '39d1d9da93127145a0d5b4d3e65bb23638f84ca9'
+              assert item['engine'] == 'postgres:17@sha256:7958605b474b3d264a969cb3a123d6aa00ad1e1fe9da8a69984dabb704d93317'
+              assert item['dpmBinarySha256'] == '5445759b9d243e2f34957ecb63589b3320a5741ed854d1848708efb4d0b114bc'
+
           assert data['policy']['preserveExtraRepositories'] is True
           assert data['policy']['neverDeleteOrOverwriteIndependentWork'] is True
           assert data['policy']['testOrganizationBeforeProductionPromotion'] is True

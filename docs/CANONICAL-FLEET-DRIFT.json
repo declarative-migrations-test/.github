@@ -28,15 +28,25 @@
       "fullName": "declarative-migrations/declmig-e2e",
       "role": "stable-promotion-orchestrator",
       "present": true,
-      "bootstrapStatus": "draft-pull-request-open",
-      "bootstrapPullRequest": "https://github.com/declarative-migrations/declmig-e2e/pull/1"
+      "bootstrapStatus": "merged-main-green",
+      "bootstrapPullRequest": "https://github.com/declarative-migrations/declmig-e2e/pull/1",
+      "mergeCommit": "ac9a8c23c736a53885da21a53ed34545eb1a103f",
+      "mainWorkflowRun": 31332941841,
+      "sourceCommit": "39d1d9da93127145a0d5b4d3e65bb23638f84ca9",
+      "engine": "postgres:17@sha256:7958605b474b3d264a969cb3a123d6aa00ad1e1fe9da8a69984dabb704d93317",
+      "dpmBinarySha256": "5445759b9d243e2f34957ecb63589b3320a5741ed854d1848708efb4d0b114bc"
     },
     {
       "fullName": "declarative-migrations-test/declmig-e2e",
       "role": "candidate-and-destructive-fleet-orchestrator",
       "present": true,
-      "bootstrapStatus": "draft-pull-request-open",
-      "bootstrapPullRequest": "https://github.com/declarative-migrations-test/declmig-e2e/pull/1"
+      "bootstrapStatus": "merged-main-green",
+      "bootstrapPullRequest": "https://github.com/declarative-migrations-test/declmig-e2e/pull/1",
+      "mergeCommit": "201779ef3af3f2516a01a8223ac1d02c073ca39c",
+      "mainWorkflowRun": 31332843970,
+      "sourceCommit": "39d1d9da93127145a0d5b4d3e65bb23638f84ca9",
+      "engine": "postgres:17@sha256:7958605b474b3d264a969cb3a123d6aa00ad1e1fe9da8a69984dabb704d93317",
+      "dpmBinarySha256": "5445759b9d243e2f34957ecb63589b3320a5741ed854d1848708efb4d0b114bc"
     }
   ],
   "policy": {
