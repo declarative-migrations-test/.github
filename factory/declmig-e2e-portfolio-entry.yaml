@@ -1,0 +1,17 @@
+name: declmig-e2e
+kind: database
+description: Canonical hostile-consumer E2E certification for exact declarative-migrations revisions across PostgreSQL, CockroachDB, packaging, locking, drift, least-privilege identities, and deterministic evidence.
+upstream_repositories:
+  - declarative-migrations/declarative-postgres-migrate.rs
+planned_upstream_repositories: []
+readiness: mixed
+dependency_strategy: matrix
+dependency_modes: [git-submodule, zed, native-package]
+objectives:
+  - Certify an immutable migration-engine revision on PostgreSQL 16/17 and CockroachDB without mutable source references.
+  - Prove confirmation, migration-lease ownership, stale-plan rejection, convergence, idempotency, and killed-owner recovery.
+  - Prove web/API/lib-core ownership with read-only web credentials, API-owned product writes, isolated web-state writes, and migrator-only DDL.
+  - Emit deterministic machine-readable release evidence bound to exact harness and source commits.
+expensive: true
+schedule: '11 5 * * *'
+required_infrastructure: [PostgreSQL 16, PostgreSQL 17, CockroachDB 25.2.4, multi-process runner]
