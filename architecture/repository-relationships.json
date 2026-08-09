@@ -22,7 +22,7 @@
   },
   "organization": "declarative-migrations-test",
   "privacy": {
-    "private_repository_count": 7,
+    "private_repository_count": 13,
     "private_repository_names_published": false,
     "public_repository_names_published": true,
     "reason": "The public .github registry intentionally withholds private repository names and edges."
