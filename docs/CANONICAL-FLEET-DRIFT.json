@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "auditedAt": "2026-08-05",
+  "auditedAt": "2026-08-09",
   "sourceOrganization": "declarative-migrations",
   "testOrganization": "declarative-migrations-test",
   "canonicalManifest": "zed-pkg-test/zed-pkg-e2e:bootstrap/test-org-fleet.json.gz",
@@ -8,14 +8,10 @@
   "expectedGovernanceRepositories": 1,
   "presentCanonicalRepositories": [
     ".github",
-    "cli-plan-e2e",
+    "cockroachdb-rollback-e2e",
     "data-preservation-e2e",
     "fuzz-property-e2e",
     "homebrew-install-e2e",
-    "postgres-zero-downtime-e2e"
-  ],
-  "missingCanonicalRepositories": [
-    "cockroachdb-rollback-e2e",
     "mysql-shadow-e2e",
     "postgres-lock-contention-e2e",
     "redshift-advisory-e2e",
@@ -23,11 +19,42 @@
     "snowflake-advisory-e2e",
     "sqlite-migration-e2e"
   ],
+  "missingCanonicalRepositories": [
+    "cli-plan-e2e",
+    "postgres-zero-downtime-e2e"
+  ],
+  "aggregatePortfolioRepositories": [
+    {
+      "fullName": "declarative-migrations/declmig-e2e",
+      "role": "stable-promotion-orchestrator",
+      "present": true,
+      "bootstrapStatus": "merged-main-green",
+      "bootstrapPullRequest": "https://github.com/declarative-migrations/declmig-e2e/pull/1",
+      "mergeCommit": "ac9a8c23c736a53885da21a53ed34545eb1a103f",
+      "mainWorkflowRun": 31332941841,
+      "sourceCommit": "39d1d9da93127145a0d5b4d3e65bb23638f84ca9",
+      "engine": "postgres:17@sha256:7958605b474b3d264a969cb3a123d6aa00ad1e1fe9da8a69984dabb704d93317",
+      "dpmBinarySha256": "5445759b9d243e2f34957ecb63589b3320a5741ed854d1848708efb4d0b114bc"
+    },
+    {
+      "fullName": "declarative-migrations-test/declmig-e2e",
+      "role": "candidate-and-destructive-fleet-orchestrator",
+      "present": true,
+      "bootstrapStatus": "merged-main-green",
+      "bootstrapPullRequest": "https://github.com/declarative-migrations-test/declmig-e2e/pull/1",
+      "mergeCommit": "201779ef3af3f2516a01a8223ac1d02c073ca39c",
+      "mainWorkflowRun": 31332843970,
+      "sourceCommit": "39d1d9da93127145a0d5b4d3e65bb23638f84ca9",
+      "engine": "postgres:17@sha256:7958605b474b3d264a969cb3a123d6aa00ad1e1fe9da8a69984dabb704d93317",
+      "dpmBinarySha256": "5445759b9d243e2f34957ecb63589b3320a5741ed854d1848708efb4d0b114bc"
+    }
+  ],
   "policy": {
     "preserveExtraRepositories": true,
     "neverDeleteOrOverwriteIndependentWork": true,
     "bootstrapThroughPullRequests": true,
     "immutableProductionPins": true,
-    "pullRequestCredentials": false
+    "pullRequestCredentials": false,
+    "testOrganizationBeforeProductionPromotion": true
   }
 }

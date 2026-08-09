@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "portfolio_id": "declmig-e2e-test",
+  "audited_at": "2026-08-09",
+  "aggregate_repository": "declarative-migrations-test/declmig-e2e",
+  "production_aggregate_repository": "declarative-migrations/declmig-e2e",
+  "production_contract": "declarative-migrations/.github:e2e/declmig-e2e.contract.json",
+  "source_repository": "declarative-migrations/declarative-postgres-migrate.rs",
+  "source_ref_policy": "full-commit-sha",
+  "destructive_targets": {
+    "allowed": true,
+    "required_target_class": "ephemeral-or-explicitly-disposable",
+    "production_credentials_allowed": false,
+    "production_database_targets_allowed": false
+  },
+  "execution_lanes": {
+    "pull_request": {
+      "secrets": false,
+      "network_writes": false,
+      "scenarios": [
+        "manifest-validation",
+        "contract-conformance",
+        "static-security-boundary"
+      ]
+    },
+    "scheduled": {
+      "environment": "test-nightly",
+      "scenarios": [
+        "engine-matrix",
+        "failure-injection",
+        "concurrency",
+        "upgrade-compatibility",
+        "chaos-recovery"
+      ]
+    },
+    "protected_manual": {
+      "environment": "test-destructive",
+      "scenarios": [
+        "cloud-engine-certification",
+        "installer-certification",
+        "release-candidate-certification"
+      ]
+    }
+  },
+  "scenario_repositories": {
+    "forward-and-rollback": [
+      "declarative-migrations-test/postgres-forward-rollback",
+      "declarative-migrations-test/cockroach-forward-rollback"
+    ],
+    "idempotent-replay": [
+      "declarative-migrations-test/idempotent-replay-e2e"
+    ],
+    "schema-drift-detection": [
+      "declarative-migrations-test/schema-drift-detection"
+    ],
+    "data-preservation": [
+      "declarative-migrations-test/data-preservation-e2e"
+    ],
+    "failure-atomicity": [
+      "declarative-migrations-test/failure-injection-atomicity"
+    ],
+    "concurrent-migrator-locking": [
+      "declarative-migrations-test/concurrent-migrator-lock"
+    ],
+    "cross-engine-compatibility": [
+      "declarative-migrations-test/cross-engine-compatibility"
+    ],
+    "upgrade-compatibility": [
+      "declarative-migrations-test/upgrade-compatibility-tests"
+    ],
+    "chaos-recovery": [
+      "declarative-migrations-test/chaos-recovery-tests"
+    ],
+    "cli-installation": [
+      "declarative-migrations-test/cli-install-e2e",
+      "declarative-migrations-test/homebrew-install-e2e"
+    ],
+    "cli-mcp-contract": [
+      "declarative-migrations-test/cli-mcp-contract"
+    ],
+    "contract-conformance": [
+      "declarative-migrations-test/contract-conformance-tests"
+    ],
+    "security-boundary": [
+      "declarative-migrations-test/security-boundary-tests"
+    ],
+    "fuzz-and-property": [
+      "declarative-migrations-test/fuzz-property-e2e"
+    ]
+  },
+  "required_new_aggregate_scenarios": [
+    "lib-core-schema-and-generated-adapter-parity",
+    "api-write-web-read-only-permissions",
+    "web-mutation-routes-through-api",
+    "shared-auth-audience-and-actor-handoff",
+    "serialized-migrator-and-empty-post-apply-diff",
+    "immutable-zed-package-install-and-lock",
+    "exact-evidence-bundle-generation"
+  ],
+  "evidence_bundle": {
+    "format": "json-lines-plus-artifacts",
+    "immutable": true,
+    "required_hash": "sha256",
+    "required_fields": [
+      "source_repository",
+      "source_commit",
+      "workflow_repository",
+      "workflow_commit",
+      "run_id",
+      "scenario",
+      "engine",
+      "result",
+      "started_at",
+      "completed_at",
+      "artifact_sha256"
+    ],
+    "consumer": "declarative-migrations/declmig-e2e"
+  },
+  "promotion_rule": "all-required-test-lanes-pass-before-production-aggregate"
+}

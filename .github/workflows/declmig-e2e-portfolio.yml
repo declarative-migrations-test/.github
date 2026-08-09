@@ -1,0 +1,64 @@
+name: Declarative migrations aggregate E2E portfolio
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/declmig-e2e-portfolio.yml'
+      - 'e2e/declmig-e2e.portfolio.json'
+      - 'scripts/validate_declmig_portfolio.py'
+      - 'docs/CANONICAL-FLEET-DRIFT.json'
+      - 'docs/CANONICAL-FLEET-DRIFT.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/declmig-e2e-portfolio.yml'
+      - 'e2e/declmig-e2e.portfolio.json'
+      - 'scripts/validate_declmig_portfolio.py'
+      - 'docs/CANONICAL-FLEET-DRIFT.json'
+      - 'docs/CANONICAL-FLEET-DRIFT.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: declmig-e2e-portfolio-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out policy source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          show-progress: false
+
+      - name: Compile validator
+        run: python3 -m py_compile scripts/validate_declmig_portfolio.py
+
+      - name: Validate aggregate test portfolio
+        run: python3 scripts/validate_declmig_portfolio.py
+
+      - name: Verify aggregate repositories are merged and main-green
+        run: |
+          python3 - <<'PY'
+          import json
+          import re
+          from pathlib import Path
+
+          drift = json.loads(Path('docs/CANONICAL-FLEET-DRIFT.json').read_text(encoding='utf-8'))
+          portfolio = json.loads(Path('e2e/declmig-e2e.portfolio.json').read_text(encoding='utf-8'))
+          aggregate = {item['fullName']: item for item in drift['aggregatePortfolioRepositories']}
+          for name in (portfolio['aggregate_repository'], portfolio['production_aggregate_repository']):
+              item = aggregate[name]
+              assert item['present'] is True
+              assert item['bootstrapStatus'] == 'merged-main-green'
+              assert item['bootstrapPullRequest'] == f'https://github.com/{name}/pull/1'
+              assert re.fullmatch(r'[0-9a-f]{40}', item['mergeCommit'])
+              assert isinstance(item['mainWorkflowRun'], int) and item['mainWorkflowRun'] > 0
+              assert re.fullmatch(r'[0-9a-f]{40}', item['sourceCommit'])
+              assert re.fullmatch(r'[0-9a-f]{64}', item['dpmBinarySha256'])
+          PY
