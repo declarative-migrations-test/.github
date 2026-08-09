@@ -11,6 +11,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: canonical-fleet-drift-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-24.04
@@ -21,15 +25,19 @@ jobs:
         with:
           persist-credentials: false
           show-progress: false
+
       - name: Validate the machine-readable reconciliation
         run: |
           python3 - <<'PY'
           import json
+          import re
           from pathlib import Path
 
           path = Path('docs/CANONICAL-FLEET-DRIFT.json')
           data = json.loads(path.read_text(encoding='utf-8'))
           assert data['schemaVersion'] == 1
+          assert data['auditedAt'] == '2026-08-09'
+          assert data['sourceOrganization'] == 'declarative-migrations'
           assert data['testOrganization'] == 'declarative-migrations-test'
           expected = data['expectedSpecializedRepositories'] + data['expectedGovernanceRepositories']
           present = data['presentCanonicalRepositories']
@@ -39,10 +47,30 @@ jobs:
           assert len(missing) == len(set(missing))
           assert not set(present) & set(missing)
           assert '.github' in present
-          assert len(missing) == 7
+          assert set(missing) == {'cli-plan-e2e', 'postgres-zero-downtime-e2e'}
+
+          aggregates = data['aggregatePortfolioRepositories']
+          assert len(aggregates) == 2
+          by_name = {item['fullName']: item for item in aggregates}
+          assert set(by_name) == {
+              'declarative-migrations/declmig-e2e',
+              'declarative-migrations-test/declmig-e2e',
+          }
+          assert by_name['declarative-migrations/declmig-e2e']['present'] is False
+          assert by_name['declarative-migrations-test/declmig-e2e']['present'] is False
           assert data['policy']['preserveExtraRepositories'] is True
           assert data['policy']['neverDeleteOrOverwriteIndependentWork'] is True
-          raw = path.read_text(encoding='utf-8').lower()
-          for marker in ('ghp_', 'github_pat_', 'authorization: bearer ', 'client_secret=', 'password='):
-              assert marker not in raw
+          assert data['policy']['testOrganizationBeforeProductionPromotion'] is True
+
+          raw = path.read_text(encoding='utf-8')
+          for pattern in (
+              r'gh[pousr]_[A-Za-z0-9]{20,}',
+              r'github_pat_[A-Za-z0-9_]{20,}',
+              r'lin_api_[A-Za-z0-9]{20,}',
+              r'cfat_[A-Za-z0-9_-]{20,}',
+              r'Authorization: Bearer\s+\S+',
+              r'client_secret=',
+              r'password=',
+          ):
+              assert re.search(pattern, raw, re.IGNORECASE) is None
           PY
