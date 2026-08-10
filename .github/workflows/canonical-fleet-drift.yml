@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: canonical-fleet-drift-${{ github.event.pull_request.number || github.ref }}
+  group: canonical-fleet-drift-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
