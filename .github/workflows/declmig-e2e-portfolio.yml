@@ -22,7 +22,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: declmig-e2e-portfolio-${{ github.event.pull_request.number || github.ref }}
+  group: declmig-e2e-portfolio-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
